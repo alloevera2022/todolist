@@ -75,27 +75,31 @@ todosNode.addEventListener('click', (event) => {
 
 render(); */
 
-import { Connection, SystemProgram, Transaction, clusterApiUrl } from '@solana/web3.js';
-import { WalletAdapterProvider, useWallet } from '@solana/wallet-adapter-react';
-import { WalletDialogButton } from '@solana/wallet-adapter-react-ui';
-import { useConnection } from './utils/connection';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterAntd } from '@solana/wallet-adapter-ant-design';
+import { clusterApiUrl } from '@solana/web3.js';
 
-const Wallet = () => {
-    const { adapter, publicKey, ready, connect, disconnect } = useWallet();
-    const connection = useConnection();
-    
-    return (
-      <div>
-        {ready && (
-          <div>
-            {publicKey ? (
-              <button onClick={() => disconnect()}>Disconnect</button>
-            ) : (
-              <button onClick={() => connect()}>Connect</button>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  };
-  
+import App from './App';
+
+const network = clusterApiUrl('devnet');
+const endpoint = network;
+
+const wallets = [
+  {
+    name: 'Sollet',
+    url: 'https://www.sollet.io',
+    icon: 'https://www.sollet.io/img/favicon.ico',
+    adapter: WalletAdapterAntd,
+  },
+];
+
+ReactDOM.render(
+  <ConnectionProvider endpoint={endpoint}>
+    <WalletProvider wallets={wallets} autoConnect>
+      <App />
+    </WalletProvider>
+  </ConnectionProvider>,
+  document.getElementById('root')
+);
