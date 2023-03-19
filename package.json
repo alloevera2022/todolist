@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@solana/wallet-adapter": "github:solana-labs/wallet-adapter"
+  }
+}

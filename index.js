@@ -75,3 +75,9 @@ todosNode.addEventListener('click', (event) => {
 
 render(); 
 
+
+import { SolanaWeb3WalletAdapter } from '@solana/wallet-adapter-web3';
+
+const wallet = new SolanaWeb3WalletAdapter(window.solana);
+
+const publicKey = await wallet.getPublicKey();
