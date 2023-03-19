@@ -1,4 +1,4 @@
-const todosNode = document.querySelector('.js-todos');
+/* const todosNode = document.querySelector('.js-todos');
 const inputNode = document.querySelector('.js-input');
 const btnNode = document.querySelector('.js-btn');
 
@@ -56,8 +56,8 @@ btnNode.addEventListener ('click', () => {
 
     render();
 
-}); 
-
+}); */
+/*
 todosNode.addEventListener('click', (event) => {
     if (event.target.tagName !== 'BUTTON') {
         return;
@@ -73,11 +73,29 @@ todosNode.addEventListener('click', (event) => {
 
 
 
-render(); 
+render(); */
 
+import { Connection, SystemProgram, Transaction, clusterApiUrl } from '@solana/web3.js';
+import { WalletAdapterProvider, useWallet } from '@solana/wallet-adapter-react';
+import { WalletDialogButton } from '@solana/wallet-adapter-react-ui';
+import { useConnection } from './utils/connection';
 
-import { SolanaWeb3WalletAdapter } from '@solana/wallet-adapter-web3';
-
-const wallet = new SolanaWeb3WalletAdapter(window.solana);
-
-const publicKey = await wallet.getPublicKey();
+const Wallet = () => {
+    const { adapter, publicKey, ready, connect, disconnect } = useWallet();
+    const connection = useConnection();
+    
+    return (
+      <div>
+        {ready && (
+          <div>
+            {publicKey ? (
+              <button onClick={() => disconnect()}>Disconnect</button>
+            ) : (
+              <button onClick={() => connect()}>Connect</button>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
